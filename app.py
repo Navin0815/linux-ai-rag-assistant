@@ -1,22 +1,19 @@
-from src.loader import DocumentLoader
-from src.text_splitter import TextSplitter
+from src.embeddings import EmbeddingModel
 
 
 def main():
 
-    loader = DocumentLoader("documents")
-    documents = loader.load_documents()
+    model = EmbeddingModel()
 
-    splitter = TextSplitter()
+    embedding = model.get_embedding_model()
 
-    chunks = splitter.split_documents(documents)
+    vector = embedding.embed_query(
+        "What is DevSecOps?"
+    )
 
-    print("=" * 60)
-    print(f"Pages Loaded : {len(documents)}")
-    print(f"Chunks Created : {len(chunks)}")
-    print("=" * 60)
+    print(f"Embedding Length : {len(vector)}")
 
-    print(chunks[0].page_content)
+    print(vector[:10])
 
 
 if __name__ == "__main__":
